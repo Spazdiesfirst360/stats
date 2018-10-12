@@ -1,0 +1,83 @@
+.blue {
+  background-color: #eef;
+}
+
+.red {
+  background-color: #fee;
+}
+
+.green {
+  background-color: #efe;
+}
+
+.blue a {
+  display: block;
+  font-weight: bold;
+}
+
+.red a {
+  display: block;
+  font-weight: bold;
+}
+
+.options-header {
+  background-color: rgb(150, 150, 150);
+}
+
+.options-item {
+  background-color: rgb(200, 200, 200);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+html, body {
+  min-height: 100%;
+  height: 100%;
+}
+
+.body-like {
+  min-height: 100%;
+}
+
+.invalid-feedback {
+  display: block;
+}
+
+.loader {
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+}
+
+.grid-item {
+  padding: 5px;
+}
+
+.grid-item.form-group {
+  margin-bottom: 0
+}
+
+.bingo-container {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+}
+
+.bingo-item {
+  padding: 5px;
+  border: 1px solid black;
+}

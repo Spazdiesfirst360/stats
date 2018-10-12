@@ -1,0 +1,315 @@
+<template>
+  <require from="../../utilities/counter"></require>
+  <div class='container-fluid'>
+    <h1>
+      <b>
+        <u>
+          <a route-href='route: event-team; params.bind: {year: event.year, eventCode: event.eventCode, teamNumber: team.teamNumber}'>
+            ${team.teamNumber} (${team.teamName})
+          </a>
+        </u>
+      </b>
+    </h1>
+    <h3>
+      <b>
+        <a route-href='route: event-matches; params.bind: {year: event.year, eventCode: event.eventCode }'>
+          ${event.name}
+        </a>
+      </b>
+      match ${model.matchNumber}
+    </h3>
+    <div class='row'>
+      <div class='col'>
+        <h3> Auto </h3>
+        <hr>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col'>
+        <div class='row'>
+          <div class='col'>
+            <h3> starting position ${model.startingPosition} </h3>
+            <label>
+              <input type='radio' name='starting_pos' value='Non exchange side' checked.bind='model.startingPosition'> Non exchange side </label>
+            <br>
+            <label>
+              <input type='radio' name='starting_pos' value='Middle' checked.bind='model.startingPosition'> Middle </label>
+            <br>
+            <label>
+              <input type='radio' name='starting_pos' value='Exchange side' checked.bind='model.startingPosition'> Exchange side </label>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col'>
+            <h5>Notes</h5>
+            <textarea id='autoNotes' class='form-control' rows='5' value.bind="model.autoNotes"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class='col'>
+        <div class='row'>
+          <div class='col'>
+            <h3> action </h3>
+            <label>
+              <input type='checkbox' checked.bind='model.autoCrossedLine'> Crossed Line
+            </label>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col form-group'>
+            <counter display="Switch Cubes deposited" model.bind='model' property="autoSwitchCount" max.bind="defaultMax" rules.bind="rules" on-increment.call="onIncAutoSwitch()"></counter>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col'>
+            <label>
+              <input type='checkbox' checked.bind='model.autoAttemptedSwitch' /> Attempted Switch
+            </label>
+          </div>
+          <div class='col'>
+            <label>
+              <input type='checkbox' checked.bind='model.autoSwitchWrongSide' /> Switch Wrong Side
+            </label>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col form-group'>
+            <counter display="Scale Cubes deposited" model.bind='model' property="autoScaleCount" max.bind="defaultMax" rules.bind="rules" on-increment.call='onIncAutoScale()'></counter>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col'>
+            <label>
+              <input type='checkbox' checked.bind='model.autoAttemptedScale' /> Attempted Scale
+            </label>
+          </div>
+          <div class='col'>
+            <label>
+              <input type='checkbox' checked.bind='model.autoScaleWrongSide' /> Scale Wrong Side
+            </label>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col'>
+            <label>
+              <input type='checkbox' checked.bind='model.autoVault'> Vault (lol)
+              </input>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col'>
+        <h3> Teleop </h3>
+        <hr>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-sm'>
+        <div class='row'>
+          <div class='col'>
+            <h3>Vault</h3>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col form-group'>
+            <counter display="Cubes deposited" model.bind='model' property="vaultCount" max.bind="maxVault" rules.bind="rules"></counter>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='col form-group'>
+          </div>
+        </div>
+      </div>
+      <div class='col-sm'>
+        <div class='row'>
+          <div class='col'>
+            <h3>Scale</h3>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col form-group'>
+            <counter display="Cubes deposited" model.bind='model' property="scaleCount" max.bind="defaultMax" rules.bind="rules"></counter>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col form-group'>
+            <counter display="Dropped Cubes" model.bind='model' property="scaleDroppedCount" max.bind="defaultMax" rules.bind="rules"></counter>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col form-group'>
+            <counter display="Cubes Knocked Out" model.bind='model' property="scaleKnockedOutCount" max.bind="defaultMax" rules.bind="rules"></counter>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col form-group'>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col-sm'>
+        <div class='row'>
+          <div class='col'>
+            <h3>Allied Switch</h3>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col form-group'>
+            <counter display="Cubes deposited" model.bind='model' property="allySwitchCount" max.bind="defaultMax" rules.bind="rules"></counter>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col form-group'>
+          </div>
+        </div>
+      </div>
+      <div class='col-sm'>
+
+        <div class='row'>
+          <div class='col'>
+            <h3>Opponent Switch</h3>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col form-group'>
+            <counter display="Cubes deposited" model.bind='model' property="oppoSwitchCount" max.bind="defaultMax" rules.bind="rules"></counter>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col form-group'>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col'>
+        <h3>Climb</h3>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col-3'>
+        <label>
+          <input type='checkbox' class='form-control' checked.bind='model.climbed' click.delegate='model.attemptedClimb=true' /> Climbed
+        </label>
+      </div>
+      <div class='col-3'>
+        <label>
+          <input type='checkbox' class='form-control' checked.bind='model.attemptedClimb' /> Attempted Climbed
+        </label>
+      </div>
+      <div class='col-3'>
+        <div>
+          <label>
+            Lifted ${partner1}
+            <input type='checkbox' class='form-control' checked.bind='liftedPartner1' />
+          </label>
+          <label>
+            Lifted ${partner2}
+            <input type='checkbox' class='form-control' checked.bind='liftedPartner2' />
+          </label>
+
+        </div>
+      </div>
+      <div class='col-3'>
+        <label>Lifted by</label>
+        <select class='form-control' value.bind='model.liftedBy'>
+          <option />
+          <option model.bind="partner1">
+            ${partner1}
+          </option>
+          <option model.bind="partner2">
+            ${partner2}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col'>
+        <div class='row'>
+
+          <div class='col-sm-2 form-group'>
+            <label class='form-control-label'>Robot Failure?</label>
+            <div>
+              <label>
+                <input type="radio" class='form-control' name="robot_failure" checked.bind="model.isFailure" model.bind="true"> Yes</label>
+              <br>
+              <label>
+                <input type="radio" class='form-control' name="robot_failure" checked.bind="model.isFailure" model.bind="false"> No</label>
+              <br>
+            </div>
+          </div>
+          <div class='col-sm-10 form-group' show.bind='model.isFailure'>
+            <label class='form-control-label' for='failureReason'>Failure Reasons: </label>
+            <textarea id='failureReason' class='form-control' rows='5' value.bind="model.failureReason"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class='col'>
+        <div class='row'>
+          <div class='col-sm-2 form-group'>
+            <label class='form-control-label'>Fouls?</label>
+            <div>
+              <label>
+                <input type="radio" class='form-control' name="fouls" checked.bind="model.isFoul" model.bind="true"> Yes</label>
+              <br>
+              <label>
+                <input type="radio" class='form-control' name="fouls" checked.bind="model.isFoul" model.bind="false"> No</label>
+              <br>
+            </div>
+          </div>
+          <div class='col-sm-10 form-group' show.bind='model.isFoul'>
+            <label class='form-control-label' for='foulReason'>Foul Reasons: </label>
+            <textarea id='foulReason' class='form-control' rows='5' value.bind="model.foulReason"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col form-group'>
+        <label class='form-control-label'>General Notes</label>
+        <textarea id='notes' class='form-control' rows='6' value.bind='model.notes'>
+        </textarea>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col'>
+        <h5>Scale Mechanism</h5>
+        <select class='form-control' value.bind='model.scaleMechanism'>
+          <option repeat.for='mechanism of scaleMechanisms' model.bind='mechanism'>
+            ${mechanism}
+          </option>
+        </select>
+      </div>
+      <div class='col'>
+        <div show.bind='model.scaleMechanism=="other"'>
+          <label class='form-control-label'>Scale Mechanism Notes</label>
+          <input type="text" class='form-control' value.bind='model.scaleMechanismOther' />
+        </div>
+      </div>
+    </div>
+
+
+    <div class='row'>
+      <div class='col'>
+        <button class='btn btn-primary' click.delegate="click()">Save</button>
+        <span show.bind="errorMessage != null"> ${errorMessage} </span>
+        <button class='btn btn-outline-primary float-right' click.delegate="showBingo()">Bingo</button>
+      </div>
+    </div>
+
+    <div>&nbsp;</div>
+  </div>
+
+</template>

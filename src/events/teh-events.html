@@ -1,0 +1,58 @@
+<template>
+  <require from="../aurelia-bootstrap-patches/dropdown/aubs-dropdown"></require>
+  <require from="../aurelia-bootstrap-patches/dropdown/aubs-dropdown-toggle"></require>
+  <h1>Events</h1>
+
+  <p> Maybe implement export to excel? </p>
+  <!--<p> Maybe validate contents of imported file before letting user do things with it? </p> DONE-->
+  <!--<p> Maybe validate merge results before letting user save it? </p> DONE-->
+  <p> Maybe have tba import go through merge if event already exists?</p>
+
+  <div class='container'>
+
+    <div class='row'>
+      <div class='col'>
+        <div class='btn-group float-right'>
+          <button class='btn btn-secondary' click.delegate='tbaImport()'>
+            Import from TBA
+            <img src="static/tba.png" />
+          </button>
+          <div class='btn-group dropdown' aubs-dropdown='auto-close.bind: false; on-toggle.call: toggled(state)'>
+            <button class='btn btn-primary dropdown-toggle' aubs-dropdown-toggle>
+              Import from json
+              <span class="caret"></span>
+            </button>
+            <ul class='dropdown-menu'>
+              <li>
+                <a class='dropdown-item' href="javascript:void(0)" click.delegate='localImportJson()'>Local File</a>
+              </li>
+              <li>
+                <a class='dropdown-item' href="javascript:void(0)" click.delegate='gdriveImportJson()'>Google Docs</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <table class='table table-hover'>
+      <tr>
+        <th>Event</th>
+        <th>Game</th>
+        <th>Year</th>
+      </tr>
+
+      <tr repeat.for="event of events">
+        <td><a route-href="route.bind:'event-matches'; params.bind: {year: event.year, eventCode: event.eventCode}">${event.name}</a></td>
+        <td> ${games.get(event.year).name} </td>
+        <td> ${event.year} </td>
+        <td>
+          <button class='btn btn-primary' click.delegate="exportEvent(event)">
+            Export json
+          </button>
+
+          <button class='btn btn-danger' click.delegate="deleteEvent(event)">X</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</template>
